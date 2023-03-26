@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../res/define.dart';
 import '../define.dart';
 
 class SplashPage extends StatefulWidget {
@@ -14,7 +15,15 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("Splash screen")));
+    return Scaffold(
+        body: Container(
+      color: AppColors.whiteLilac,
+      child: Center(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.dimen_24),
+        child: Image.asset(Assets.imgSplash),
+      )),
+    ));
   }
 
   @override
