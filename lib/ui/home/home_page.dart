@@ -31,18 +31,25 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                 left: Dimens.dimen_24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimens.dimen_30),
-              color: AppColors.whiteLilac,
+              color: AppColors.titanWhite,
             ),
             child: Row(children: [
               Expanded(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("June 28th"),
-                        Text("Hey, You!")
-                      ])),
-              Image.asset(Assets.icPerson, width: Dimens.dimen_30, height: Dimens.dimen_30)
+                      children: [
+                    const SizedBox(height: Dimens.dimen_24),
+                    Text("June 28th",
+                        style: Styles.rubikStyle(Dimens.dimen_12,
+                            AppColors.balticSea, FontWeight.w200)),
+                    Text("Hello, SonLe!",
+                        style: Styles.rubikStyle(Dimens.dimen_24,
+                            AppColors.balticSea, FontWeight.w600)),
+                    const SizedBox(height: Dimens.dimen_12),
+                  ])),
+              Image.asset(Assets.icPerson,
+                  width: Dimens.dimen_24, height: Dimens.dimen_24)
             ]),
           )
         ]),

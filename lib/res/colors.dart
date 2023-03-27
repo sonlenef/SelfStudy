@@ -4,6 +4,7 @@ class AppColors {
   AppColors._();
 
   static const white = Color(0xFFFFFFFF);
+  static const black = Color(0xFF000000);
 
   static const Map<int, Color> orange = <int, Color>{
     50: Color(0xFFFCF2E7),
@@ -30,4 +31,6 @@ class AppColors {
   static const heliotrope = Color(0xFFCF7DFC);
   static const electricViolet = Color(0xFF7210FF);
   static const bittersweet = Color(0xFFFD7375);
+  static const outerSpace = Color(0xFF2D3436);
+  static const balticSea = Color(0xFF28272B);
 }

@@ -47,3 +47,11 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/
     - assets/icons/
+
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: fonts/Rubik-Bold.ttf
+        - asset: fonts/Rubik-Light.ttf
+        - asset: fonts/Rubik-Medium.ttf
+        - asset: fonts/Rubik-Regular.ttf
