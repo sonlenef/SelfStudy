@@ -25,7 +25,9 @@ class AppColors {
   static const feijoa = Color(0xFF90D288);
   static const snowFlurry = Color(0xFFDDFED0);
   static const brightSun = Color(0xFFFDDB30);
+  static const titanWhite = Color(0xFFEAE8FE);
   static const fog = Color(0xFFE6CFFE);
   static const heliotrope = Color(0xFFCF7DFC);
+  static const electricViolet = Color(0xFF7210FF);
   static const bittersweet = Color(0xFFFD7375);
 }
