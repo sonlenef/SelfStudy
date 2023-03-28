@@ -51,7 +51,10 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
               Image.asset(Assets.icPerson,
                   width: Dimens.dimen_24, height: Dimens.dimen_24)
             ]),
-          )
+          ),
+          Expanded(child: Center(child: TextButton(onPressed: () {
+            bloc.funcClick();
+          }, child: const Text("Click"))))
         ]),
       ),
     );

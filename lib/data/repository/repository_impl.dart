@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../domain/define.dart';
+import '../model/define.dart';
 import 'local/define.dart';
 import 'remote/remote_data_source.dart';
 
@@ -20,11 +21,10 @@ class RepositoryImpl extends AppRepository {
   }
 
   @override
-  Future<User> login(
-      {required String username, required String password}) async {
-    final result = await _remoteDataSource.login(username, password);
-    await _saveLocalData(result.item1);
-    return result.item2;
+  Future<List<ChoiceData>> gptRequest(
+      {required String content}) async {
+    final result = await _remoteDataSource.gptRequest(content);
+    return result;
   }
 
   Future<List<Object>> _saveLocalData(String token) async {

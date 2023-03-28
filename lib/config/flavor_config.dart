@@ -19,11 +19,11 @@ extension FlavorExt on Flavor {
   String getBaseUrl() {
     switch (this) {
       case Flavor.dev:
-        return 'base-flutter.sonlenef.dev/api';
+        return 'https://api.openai.com';
       case Flavor.stg:
-        return 'base-flutter.sonlenef.stg/api';
+        return 'https://api.openai.com';
       case Flavor.prod:
-        return 'base-flutter.sonlenef.prod/api';
+        return 'https://api.openai.com';
     }
   }
 }

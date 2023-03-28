@@ -26,14 +26,13 @@ abstract class BaseApiService {
     );
   }
 
-  Future<BaseResponse<T>> request<T>({
+  Future<T> request<T>({
     required Method method,
     required String path,
     String? contentType,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     dynamic body,
-    required Decoder<T> decoder,
     ResponseType? responseType,
     int? sendTimeout,
     int? receiveTimeout,
@@ -69,13 +68,7 @@ abstract class BaseApiService {
         receiveTimeout: receiveTimeout,
       );
 
-      return BaseResponse.fromJson(
-          response.data,
-          (json) => decoder(
-                (json as Map<String, dynamic>).map(
-                  (key, value) => MapEntry(key, value),
-                ),
-              ));
+      return response.data;
     } catch (error) {
       throw _httpRequestExceptionMapper.map(error);
     }

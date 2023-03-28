@@ -1,20 +1,16 @@
+import 'package:flutter_base_architecture/data/repository/remote/api/services/gpt_service.dart';
 import 'package:injectable/injectable.dart';
-import 'package:tuple/tuple.dart';
 
-import '../../../domain/define.dart';
 import '../../model/define.dart';
-import 'api/services/user_service.dart';
 
 @LazySingleton()
 class RemoteDataSource {
-  final UserService _userService;
-  final UserDataMapper _remoteUserDataMapper;
+  final GPTService _gptService;
 
-  RemoteDataSource(this._userService, this._remoteUserDataMapper);
+  RemoteDataSource(this._gptService);
 
-  Future<Tuple2<String, User>> login(String username, String password) async {
-    final response = await _userService.login(username, password);
-    return Tuple2(response.data.accessToken,
-        _remoteUserDataMapper.mapToEntity(response.data.user));
+  Future<List<ChoiceData>> gptRequest(String content) async {
+    final response = await _gptService.gptRequest(content);
+    return response.choices;
   }
 }
