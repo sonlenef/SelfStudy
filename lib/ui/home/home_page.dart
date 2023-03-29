@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base_architecture/res/define.dart';
 import 'package:flutter_base_architecture/ui/home/home_bloc.dart';
@@ -52,9 +53,45 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                   width: Dimens.dimen_24, height: Dimens.dimen_24)
             ]),
           ),
-          Expanded(child: Center(child: TextButton(onPressed: () {
-            bloc.funcClick();
-          }, child: const Text("Click"))))
+          Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(Dimens.dimen_24),
+                  child: Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 2,
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(context: context, builder: (_) {
+                              return Container();
+                            });
+                          },
+                          child: DottedBorder(
+                            color: AppColors.fog,
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(Dimens.dimen_12),
+                            strokeWidth: 2,
+                            child: Center(
+                                child: SizedBox(
+                                    width: Dimens.dimen_60,
+                                    height: Dimens.dimen_60,
+                                    child: DottedBorder(
+                                      color: AppColors.fog,
+                                      borderType: BorderType.Circle,
+                                      strokeWidth: 2,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          color: AppColors.fog,
+                                          size: Dimens.dimen_32,
+                                        ),
+                                      ),
+                                    ))),
+                          ),
+                        ),
+                      )
+                    ],
+                  )))
         ]),
       ),
     );
