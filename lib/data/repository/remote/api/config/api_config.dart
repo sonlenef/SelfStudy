@@ -11,7 +11,7 @@ class ApiConfig {
   static const authorization = 'Authorization';
   static const basicAuthorizationName = 'admin';
   static const basicAuthorizationPassword = '123';
-  static const apiKey = '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';
+  static const apiKey = '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';
 
   static String baseUrl() {
     return FlavorConfig.instance?.values.baseUrl ?? "";

@@ -1,6 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base_architecture/res/define.dart';
+import 'package:flutter_base_architecture/ui/home/enum/form_type.dart';
+import 'package:flutter_base_architecture/ui/home/enum/quantity.dart';
 import 'package:flutter_base_architecture/ui/home/home_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -62,9 +64,11 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                         aspectRatio: 2,
                         child: InkWell(
                           onTap: () {
-                            showModalBottomSheet(context: context, builder: (_) {
-                              return Container();
-                            });
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (_) {
+                                  return bottomSheetContentWidget();
+                                });
                           },
                           child: DottedBorder(
                             color: AppColors.fog,
@@ -95,5 +99,93 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
         ]),
       ),
     );
+  }
+
+  Widget bottomSheetContentWidget() {
+    final List<DropdownMenuItem<FormType>> formTypes =
+        <DropdownMenuItem<FormType>>[];
+    for (final FormType type in FormType.values) {
+      formTypes.add(
+          DropdownMenuItem<FormType>(value: type, child: Text(type.label)));
+    }
+    bloc.formTypeSelection(FormType.vocabulary);
+
+    final List<DropdownMenuItem<Quantity>> quantities =
+        <DropdownMenuItem<Quantity>>[];
+    for (final Quantity qty in Quantity.values) {
+      quantities
+          .add(DropdownMenuItem<Quantity>(value: qty, child: Text(qty.label)));
+    }
+    bloc.quantitySelection(Quantity.optionPrimary);
+    return Container(
+        padding: const EdgeInsets.all(Dimens.dimen_24),
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Topic',
+                ),
+              ),
+              const SizedBox(height: Dimens.dimen_16),
+              Row(children: [
+                Text("Form type:",
+                    style: Styles.rubikStyle(Dimens.dimen_16,
+                        AppColors.outerSpace, FontWeight.w500)),
+                const SizedBox(width: Dimens.dimen_24),
+                StreamBuilder(
+                    stream: bloc.streamFormType,
+                    builder: (context, snapshot) {
+                      return DropdownButton<FormType>(
+                          value: snapshot.data,
+                          onChanged: (FormType? value) {
+                            if (value != null) {
+                              bloc.formTypeSelection(value);
+                            }
+                          },
+                          items: formTypes);
+                    })
+              ]),
+              const SizedBox(height: Dimens.dimen_12),
+              Row(children: [
+                Text("Quantity:",
+                    style: Styles.rubikStyle(Dimens.dimen_16,
+                        AppColors.outerSpace, FontWeight.w500)),
+                const SizedBox(width: Dimens.dimen_24),
+                StreamBuilder(
+                    stream: bloc.streamQty,
+                    builder: (context, snapshot) {
+                      return DropdownButton<Quantity>(
+                          value: snapshot.data,
+                          onChanged: (Quantity? value) {
+                            if (value != null) {
+                              bloc.quantitySelection(value);
+                            }
+                          },
+                          items: quantities);
+                    })
+              ]),
+              const Expanded(child: SizedBox()),
+              Row(children: [
+                Expanded(
+                    child: FilledButton.tonal(
+                        onPressed: () {},
+                        style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.fog,
+                            surfaceTintColor: AppColors.titanWhite),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: Dimens.dimen_14),
+                          child: Text(
+                            "Submit",
+                            style: Styles.rubikStyle(Dimens.dimen_16,
+                                AppColors.electricViolet, FontWeight.w400),
+                          ),
+                        )))
+              ]),
+              const SizedBox(height: Dimens.dimen_12)
+            ]));
   }
 }
