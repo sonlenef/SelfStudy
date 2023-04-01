@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter_base_architecture/data/model/define.dart';
 import 'package:flutter_base_architecture/domain/usecases/define.dart';
@@ -22,6 +23,7 @@ class HomeBloc extends BaseBloc {
   late Function(FormType type) formTypeSelection;
   late Function(Quantity qty) quantitySelection;
   late void Function(String) funcTopicChanged;
+  late VoidCallback funcSubmit;
 
   StreamSink<FormType> get _streamFormTypeOut => _formTypeSubject.sink;
 
@@ -36,10 +38,12 @@ class HomeBloc extends BaseBloc {
 
   late Stream<bool> streamIsButtonSubmitEnable;
 
+  late Stream<List<ChoiceData>?> streamSubmitSuccess;
+
   HomeBloc(this._gptRequestUseCase) {
-    final formTypeSelectController = PublishSubject<FormType>()
+    final formTypeSelectController = BehaviorSubject<FormType>()
       ..disposeBy(disposeBag);
-    final quantitySelectController = PublishSubject<Quantity>()
+    final quantitySelectController = BehaviorSubject<Quantity>()
       ..disposeBy(disposeBag);
     final topicController = BehaviorSubject.seeded("")..disposeBy(disposeBag);
     final submitController = PublishSubject<void>()..disposeBy(disposeBag);
@@ -49,6 +53,7 @@ class HomeBloc extends BaseBloc {
     formTypeSelection = (FormType type) => formTypeSelectController.add(type);
     quantitySelection = (Quantity qty) => quantitySelectController.add(qty);
     funcTopicChanged = topicController.add;
+    funcSubmit = () => submitController.add(null);
 
     formTypeSelectController.stream.listen((value) {
       _streamFormTypeOut.add(value);
@@ -75,6 +80,34 @@ class HomeBloc extends BaseBloc {
       validationError,
       streamIsButtonSubmitEnable.mapTo(null),
     ]);
+
+    streamSubmitSuccess = validationError.flatMap((String? error) {
+      if (error == null) {
+        return _gptRequest(
+            "${quantitySelectController.value.label} ${topicController.value} ${formTypeSelectController.value.label}");
+      } else {
+        return const Stream.empty();
+      }
+    });
+
+    streamSubmitSuccess.listen((List<ChoiceData>? data) {
+      if (data != null) {
+        for (var choiceData in data) {
+          String myString = choiceData.message.content;
+
+          List<String> categories = myString.split('\n\n');
+
+          List<List<String>> wordLists = [];
+
+          for (String category in categories) {
+            List<String> categoryList = category.split(': ')[1].split(',').map((word) => word.trim()).toList();
+            wordLists.add(categoryList);
+          }
+
+          print(wordLists);
+        }
+      }
+    });
   }
 
   Stream<List<ChoiceData>> _gptRequest(String content) =>

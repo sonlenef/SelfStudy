@@ -7,11 +7,11 @@ class ApiConfig {
   static const receiveTimeout = 240000;
   static const sendTimeout = 30000;
 
-  static const bearer = 'Bearer';
+  static const bearer = '';
   static const authorization = 'Authorization';
   static const basicAuthorizationName = 'admin';
   static const basicAuthorizationPassword = '123';
-  static const apiKey = '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';
+  static const apiKey = '';
 
   static String baseUrl() {
     return FlavorConfig.instance?.values.baseUrl ?? "";

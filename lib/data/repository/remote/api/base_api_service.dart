@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../../../model/define.dart';
 import 'define.dart';
 import 'error/http_request_exception_mapper.dart';
 import 'middleware/auth_interceptor.dart';

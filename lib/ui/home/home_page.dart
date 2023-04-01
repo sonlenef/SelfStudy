@@ -123,11 +123,12 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Topic',
                 ),
+                onChanged: bloc.funcTopicChanged,
               ),
               const SizedBox(height: Dimens.dimen_16),
               Row(children: [
@@ -171,7 +172,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
               Row(children: [
                 Expanded(
                     child: FilledButton.tonal(
-                        onPressed: () {},
+                        onPressed: () => bloc.funcSubmit(),
                         style: FilledButton.styleFrom(
                             backgroundColor: AppColors.fog,
                             surfaceTintColor: AppColors.titanWhite),
